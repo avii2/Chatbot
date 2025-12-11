@@ -1,79 +1,74 @@
 # Interview Coach (Text-Only MVP)
 
-AI-powered mock interview coach for SDE interns/juniors. The FastAPI backend serves curated interview questions, scores your answers with Gemini, and returns coaching notes and a suggested improved answer. A lightweight HTML frontend drives the flow.
+Practice interviews without the awkwardness. This FastAPI + Gemini-powered coach walks you through 10 curated questions, scores every answer, and shows you how to respond better next time. A single HTML page drives the flow—no build tools, just open and go.
 
-## Highlights
-- 10-question sessions spanning behavioral + DSA/CS fundamentals.
-- Per-answer scoring (relevance, structure, depth, communication) with bullet feedback.
-- Suggested improved answer after every submission.
-- JSON-backed persistence for sessions and question bank (no database needed).
-- Simple frontend that talks to the API at `http://localhost:8000`.
+## What you get
+- 10-question sessions across behavioral and DSA/CS fundamentals.
+- Instant scoring on relevance, structure, depth, and communication.
+- Bulleted feedback plus a short, improved sample answer.
+- JSON storage for questions and sessions—no database to set up.
+- Friendly one-page frontend that talks to `http://localhost:8000`.
 
-## Project Structure
+## Repo tour
 - `backend/` – FastAPI app (`main.py`) and Python deps (`requirements.txt`).
 - `frontend/` – Single-page HTML/CSS/JS client (`index.html`).
-- `data/` – `questions.json` (question bank) and `sessions.json` (saved sessions).
-- `spec.md` – Original product spec for the MVP.
+- `data/` – `questions.json` (question bank) and `sessions.json` (session store).
+- `spec.md` – Original MVP spec and scope.
 
-## Prerequisites
+## Prereqs
 - Python 3.10+ recommended.
 - Gemini API key with access to `gemini-1.5-pro` (or another configured model).
-- Node is **not** required; the frontend is plain HTML + fetch.
+- No Node build needed; the frontend uses plain fetch.
 
-## Setup
-1) Clone the repo and move into it:
+## Quick start
+1) Clone and enter the repo
 ```bash
 git clone https://github.com/avii2/Chatbot.git
 cd Chatbot
 ```
-2) Create and activate a virtual environment (optional but recommended):
+2) (Optional) Create a virtualenv
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\\Scripts\\activate
 ```
-3) Install backend dependencies:
+3) Install backend deps
 ```bash
 pip install -r backend/requirements.txt
 ```
-4) Provide your Gemini key (required for scoring):
+4) Set your Gemini key (required)
 ```bash
 export GEMINI_API_KEY="your-key-here"
-# Optional: override the model (defaults to gemini-1.5-pro)
+# Optional: override the model
 export GEMINI_MODEL="gemini-1.5-pro"
 ```
 
-## Run the backend
+## Run it
+- Backend
 ```bash
 uvicorn backend.main:app --reload --port 8000
 ```
-
-## Run the frontend
-Open `frontend/index.html` directly in the browser, or serve it from the repo root:
+- Frontend: open `frontend/index.html` directly, or serve the repo root:
 ```bash
 python -m http.server 8080
 ```
-Then visit http://localhost:8080/frontend/index.html (frontend expects the API at `http://localhost:8000` by default).
+Then visit http://localhost:8080/frontend/index.html (expects the API at `http://localhost:8000`).
 
-## API quick tour
-- `POST /start_session` → body: `{user_name, job_role, interview_type}` → returns `{session_id, question}`.
-- `POST /answer` → body: `{session_id, question_id, user_answer_text}` → returns `{evaluation, next_question}`.
-- `GET /summary/{session_id}` → returns averages, answers, and metadata for the session.
+## API at a glance
+- `POST /start_session` — `{user_name, job_role, interview_type}` → `{session_id, question}`
+- `POST /answer` — `{session_id, question_id, user_answer_text}` → `{evaluation, next_question}`
+- `GET /summary/{session_id}` — aggregates scores and answers for the session
 
-If Gemini fails (e.g., no key), the backend returns fallback neutral scores with guidance to set `GEMINI_API_KEY`.
+If Gemini is unavailable, the backend returns neutral fallback scores and a reminder to set `GEMINI_API_KEY`.
 
-## Data & persistence
-- Question bank lives in `data/questions.json`; edit or expand to customize roles/categories.
-- Sessions are stored in `data/sessions.json` so runs are stateful without a database.
-
-## Development notes
-- CORS is open (`allow_origins=["*"]`) for local testing.
-- Scoring criteria are defined in `backend/main.py` under `evaluate_answer`.
-- The frontend uses fetch against `API_BASE = "http://localhost:8000"`; change this constant if you deploy elsewhere.
+## Customize and extend
+- Add or tweak questions in `data/questions.json`.
+- Update scoring criteria in `backend/main.py` (`evaluate_answer`).
+- Point the frontend to a different API host by changing `API_BASE` in `frontend/index.html`.
 
 ## Troubleshooting
-- `Missing GEMINI_API_KEY` → ensure the env var is set before starting uvicorn.
-- Network errors from frontend → confirm backend is running on port 8000 and CORS remains open.
-- Non-JSON LLM output → the backend raises HTTP 500; check Gemini key/model and logs.
+- `Missing GEMINI_API_KEY` → export the key before running uvicorn.
+- Frontend cannot reach API → ensure backend runs on port 8000; CORS is open.
+- LLM returns non-JSON → check the Gemini key/model and backend logs; the API responds 500 in that case.
 
 ## License
 Not specified in this repo. Add your preferred license before publishing.
