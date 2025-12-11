@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interview Coach (Text)</title>
+    <style>
+      :root {
+        --bg: radial-gradient(circle at 20% 20%, #2e1a47, #0f172a 45%), radial-gradient(circle at 80% 0%, #0b7, #0f172a 30%), radial-gradient(circle at 10% 90%, #f0a500, #0f172a 35%);
+        --glass: rgba(255, 255, 255, 0.08);
+        --accent: #7cf5ff;
+        --accent-2: #f7aef8;
+        --text: #e5edff;
+        --muted: #9fb0d1;
+      }
+      * {
+        box-sizing: border-box;
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--text);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 0.9fr;
+        gap: 16px;
+        padding: 24px;
+      }
+      .card {
+        background: var(--glass);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        padding: 18px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), 0 0 30px rgba(124, 245, 255, 0.08);
+        backdrop-filter: blur(12px);
+      }
+      h1,
+      h2,
+      h3 {
+        margin: 0 0 8px;
+      }
+      h1 {
+        font-size: 28px;
+      }
+      label {
+        display: block;
+        font-size: 14px;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+      input,
+      select,
+      textarea,
+      button {
+        width: 100%;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text);
+        outline: none;
+      }
+      textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+      button {
+        cursor: pointer;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.2s ease;
+      }
+      button.primary {
+        background: linear-gradient(135deg, #6fffe9, #7c4dff);
+        border: none;
+        color: #0b1021;
+        box-shadow: 0 10px 30px rgba(124, 245, 255, 0.3);
+      }
+      button.secondary {
+        background: linear-gradient(135deg, #ffb347, #ff416c);
+        border: none;
+        color: #0b1021;
+        box-shadow: 0 10px 30px rgba(255, 130, 130, 0.3);
+      }
+      button:hover {
+        transform: translateY(-1px);
+      }
+      .chips {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+      .chip {
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .question-box {
+        font-size: 18px;
+        line-height: 1.4;
+        margin: 6px 0 12px;
+      }
+      .scores {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .score-bar {
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 10px;
+        padding: 10px;
+      }
+      .score-bar .label {
+        color: var(--muted);
+        font-size: 13px;
+        margin-bottom: 4px;
+      }
+      .bar {
+        position: relative;
+        width: 100%;
+        height: 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        overflow: hidden;
+      }
+      .bar-fill {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #6fffe9, #7c4dff);
+        width: 0%;
+        transition: width 0.3s ease;
+      }
+      ul {
+        padding-left: 20px;
+        margin: 8px 0;
+        color: var(--muted);
+      }
+      .tagline {
+        color: var(--muted);
+        margin-bottom: 16px;
+      }
+      .status-dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 8px;
+        background: #00e6a8;
+        box-shadow: 0 0 10px rgba(0, 230, 168, 0.8);
+      }
+      .pill {
+        background: rgba(124, 245, 255, 0.1);
+        border: 1px solid rgba(124, 245, 255, 0.4);
+        color: var(--accent);
+        padding: 10px 12px;
+        border-radius: 12px;
+        font-size: 13px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .collapsed {
+        display: none;
+      }
+      @media (max-width: 1000px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid">
+      <div class="card">
+        <h1>Interview Coach</h1>
+        <div class="tagline">Voice comes later; let's nail the text coaching first.</div>
+        <div class="chips">
+          <div class="chip">English</div>
+          <div class="chip">SDE Intern / Junior</div>
+          <div class="chip">Behavioral + DSA + CS</div>
+          <div class="chip">10 questions</div>
+        </div>
+        <form id="start-form">
+          <label for="name">Your name</label>
+          <input id="name" name="name" placeholder="Alex" required />
+
+          <label for="role">Job role</label>
+          <input id="role" name="role" value="SDE Intern" />
+
+          <label for="type">Interview type</label>
+          <select id="type" name="type">
+            <option value="behavioral">Behavioral</option>
+            <option value="technical">Technical (DSA/CS/OOP)</option>
+            <option value="mixed" selected>Mixed</option>
+          </select>
+
+          <button class="primary" type="submit" style="margin-top: 14px">Start session</button>
+        </form>
+
+        <div id="session-info" class="pill" style="margin-top: 12px; display: none">
+          <span class="status-dot"></span>
+          <span id="session-id"></span>
+        </div>
+
+        <div id="question-card" style="margin-top: 18px; display: none">
+          <h3>Current question</h3>
+          <div class="question-box" id="question-text"></div>
+          <div class="chips">
+            <div class="chip" id="question-category"></div>
+            <div class="chip" id="question-difficulty"></div>
+          </div>
+          <label for="answer">Your answer</label>
+          <textarea id="answer" placeholder="Type your response here..." disabled></textarea>
+          <div style="display: flex; gap: 10px; margin-top: 10px">
+            <button id="submit-answer" class="primary" disabled>Submit answer</button>
+            <button id="next-question" class="secondary" disabled>Next question</button>
+          </div>
+          <div id="status" class="tagline" style="margin-top: 10px;"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Feedback</h2>
+        <div id="evaluation-empty" class="tagline">Answer a question to see your scores and coaching.</div>
+        <div id="evaluation-panel" class="collapsed">
+          <div class="scores" id="score-bars"></div>
+          <div style="margin-top: 10px">
+            <strong>Feedback</strong>
+            <ul id="feedback-list"></ul>
+          </div>
+          <div style="margin-top: 10px">
+            <strong>Suggested improved answer</strong>
+            <div id="suggested-answer" style="color: var(--muted); margin-top: 6px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const API_BASE = "http://localhost:8000";
+      let sessionId = null;
+      let currentQuestion = null;
+
+      const startForm = document.getElementById("start-form");
+      const questionCard = document.getElementById("question-card");
+      const questionText = document.getElementById("question-text");
+      const questionCategory = document.getElementById("question-category");
+      const questionDifficulty = document.getElementById("question-difficulty");
+      const answerBox = document.getElementById("answer");
+      const submitBtn = document.getElementById("submit-answer");
+      const nextBtn = document.getElementById("next-question");
+      const sessionInfo = document.getElementById("session-info");
+      const sessionIdEl = document.getElementById("session-id");
+      const evaluationPanel = document.getElementById("evaluation-panel");
+      const evaluationEmpty = document.getElementById("evaluation-empty");
+      const scoreBars = document.getElementById("score-bars");
+      const feedbackList = document.getElementById("feedback-list");
+      const suggestedAnswer = document.getElementById("suggested-answer");
+      const statusLine = document.getElementById("status");
+
+      const setLoading = (isLoading) => {
+        submitBtn.textContent = isLoading ? "Scoring..." : "Submit answer";
+        submitBtn.disabled = isLoading || !sessionId || !answerBox.value.trim();
+        startForm.querySelector("button").disabled = isLoading;
+      };
+
+      const updateScoreBars = (scores) => {
+        scoreBars.innerHTML = "";
+        Object.entries(scores || {}).forEach(([key, value]) => {
+          const pct = Math.min(5, value || 0) * 20;
+          const div = document.createElement("div");
+          div.className = "score-bar";
+          div.innerHTML = `
+            <div class="label">${key.toUpperCase()}</div>
+            <div class="bar"><div class="bar-fill" style="width:${pct}%"></div></div>
+            <div style="font-size:12px;color:var(--muted);margin-top:4px">${value ?? "–"} / 5</div>
+          `;
+          scoreBars.appendChild(div);
+        });
+      };
+
+      const hydrateQuestion = (q) => {
+        if (!q) {
+          questionText.textContent = "Session complete. Check summary in backend.";
+          questionCategory.textContent = "";
+          questionDifficulty.textContent = "";
+          answerBox.disabled = true;
+          submitBtn.disabled = true;
+          nextBtn.disabled = true;
+          return;
+        }
+        currentQuestion = q;
+        questionText.textContent = q.question;
+        questionCategory.textContent = `Category: ${q.category}`;
+        questionDifficulty.textContent = `Difficulty: ${q.difficulty}`;
+        answerBox.disabled = false;
+        answerBox.value = "";
+        submitBtn.disabled = false;
+        nextBtn.disabled = true;
+      };
+
+        startForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const user_name = document.getElementById("name").value || "Guest";
+          const job_role = document.getElementById("role").value || "SDE Intern";
+          const interview_type = document.getElementById("type").value || "mixed";
+
+          statusLine.textContent = "";
+          try {
+            const res = await fetch(`${API_BASE}/start_session`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ user_name, job_role, interview_type }),
+            });
+            if (!res.ok) {
+              statusLine.textContent = "Failed to start session. Is the backend running?";
+              return;
+            }
+            const data = await res.json();
+            sessionId = data.session_id;
+            sessionInfo.style.display = "inline-flex";
+            sessionIdEl.textContent = `Session: ${sessionId.slice(0, 8)}...`;
+            questionCard.style.display = "block";
+            hydrateQuestion(data.question);
+            evaluationPanel.classList.add("collapsed");
+            evaluationEmpty.style.display = "block";
+          } catch (err) {
+            console.error(err);
+            statusLine.textContent = "Cannot reach API at http://localhost:8000. Check server.";
+          }
+        });
+
+      submitBtn.addEventListener("click", async () => {
+        if (!sessionId || !currentQuestion) return;
+        const user_answer_text = answerBox.value.trim();
+        if (!user_answer_text) return;
+
+        setLoading(true);
+        try {
+          const res = await fetch(`${API_BASE}/answer`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              session_id: sessionId,
+              question_id: currentQuestion.id,
+              user_answer_text,
+            }),
+          });
+          if (!res.ok) {
+            statusLine.textContent = "Failed to score answer. Check backend logs.";
+            return;
+          }
+          const data = await res.json();
+          const { evaluation, next_question } = data;
+
+          updateScoreBars(evaluation.scores);
+          feedbackList.innerHTML = "";
+          (evaluation.feedback || []).forEach((line) => {
+            const li = document.createElement("li");
+            li.textContent = line;
+            feedbackList.appendChild(li);
+          });
+          suggestedAnswer.textContent = evaluation.suggested_answer || "";
+          evaluationPanel.classList.remove("collapsed");
+          evaluationEmpty.style.display = "none";
+
+          nextBtn.disabled = !next_question;
+          if (!next_question) {
+            answerBox.disabled = true;
+            submitBtn.disabled = true;
+          }
+          nextBtn.onclick = () => {
+            hydrateQuestion(next_question);
+          };
+        } catch (err) {
+          console.error(err);
+          statusLine.textContent = "Network error reaching API.";
+        } finally {
+          setLoading(false);
+        }
+      });
+    </script>
+  </body>
+</html>

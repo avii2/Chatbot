@@ -1,0 +1,132 @@
+[
+  {
+    "id": "behav-1",
+    "category": "behavioral",
+    "difficulty": "easy",
+    "question": "Tell me about a time you had to learn a new technology quickly. What was the situation and outcome?",
+    "sample_good_points": [
+      "Sets context: project or class and why the tech mattered",
+      "Explains learning approach: docs, tutorials, pairing, experiments",
+      "Describes challenges and how they were resolved",
+      "Quantifies result: delivered feature, improved performance, grade, etc.",
+      "Reflects on takeaway or how they'd do it faster next time"
+    ]
+  },
+  {
+    "id": "behav-2",
+    "category": "behavioral",
+    "difficulty": "medium",
+    "question": "Describe a conflict or disagreement on a team and how you resolved it.",
+    "sample_good_points": [
+      "States the specific disagreement and stakes",
+      "Shows listening to both sides and clarifying goals",
+      "Outlines actions: proposing options, data, trade-offs",
+      "Explains resolution and outcome",
+      "Shares what they learned about communication"
+    ]
+  },
+  {
+    "id": "behav-3",
+    "category": "behavioral",
+    "difficulty": "easy",
+    "question": "What is a project you're proud of? How did you measure its impact?",
+    "sample_good_points": [
+      "Clear project goal and their role",
+      "Interesting challenge or constraint",
+      "Technical choices and reasoning",
+      "Impact with numbers: users, latency, accuracy, grade, etc.",
+      "Personal learning or next iteration"
+    ]
+  },
+  {
+    "id": "algo-1",
+    "category": "algorithms",
+    "difficulty": "easy",
+    "question": "Given an array of integers, return the indices of the two numbers that add up to a target.",
+    "sample_good_points": [
+      "Clarifies constraints and input size",
+      "Brute force O(n^2) approach",
+      "Optimal hash map O(n) approach and why it works",
+      "Mentions edge cases: duplicates, no solution",
+      "Provides time and space complexity"
+    ]
+  },
+  {
+    "id": "algo-2",
+    "category": "algorithms",
+    "difficulty": "medium",
+    "question": "Explain how you would detect a cycle in a singly linked list.",
+    "sample_good_points": [
+      "States Floyd's tortoise and hare pointers",
+      "Explains why it detects a cycle",
+      "Notes time O(n), space O(1)",
+      "Mentions alternative: hash set with O(n) space",
+      "Discusses how to find the cycle start if asked"
+    ]
+  },
+  {
+    "id": "algo-3",
+    "category": "algorithms",
+    "difficulty": "medium",
+    "question": "How would you design a stack that supports push, pop, and retrieving the minimum element in O(1)?",
+    "sample_good_points": [
+      "States using auxiliary min stack or store (value, currentMin)",
+      "Explains push/pop logic with min tracking",
+      "Clarifies O(1) time and space trade-offs",
+      "Mentions handling duplicates correctly",
+      "Edge cases: empty stack operations"
+    ]
+  },
+  {
+    "id": "cs-1",
+    "category": "cs_fundamentals",
+    "difficulty": "easy",
+    "question": "What is the difference between a process and a thread?",
+    "sample_good_points": [
+      "Defines process vs thread",
+      "Mentions memory isolation vs shared address space",
+      "Context switching cost and resources",
+      "Use cases for threads (concurrency) vs processes (isolation)",
+      "Mentions synchronization/communication considerations"
+    ]
+  },
+  {
+    "id": "cs-2",
+    "category": "cs_fundamentals",
+    "difficulty": "medium",
+    "question": "Explain how HTTP works for a simple web request from browser to server.",
+    "sample_good_points": [
+      "DNS lookup to resolve domain",
+      "TCP/TLS handshake basics",
+      "HTTP request structure and methods",
+      "Server response, status codes, headers, body",
+      "Caching/CDN and connection reuse keep-alive"
+    ]
+  },
+  {
+    "id": "oop-1",
+    "category": "oop",
+    "difficulty": "easy",
+    "question": "What are the four pillars of OOP and give a brief example of each.",
+    "sample_good_points": [
+      "Encapsulation: hide data via methods",
+      "Abstraction: expose only what is necessary via interfaces",
+      "Inheritance: reuse behavior, note risks of tight coupling",
+      "Polymorphism: same interface, different implementations",
+      "Simple relatable example (e.g., shapes/vehicles)"
+    ]
+  },
+  {
+    "id": "oop-2",
+    "category": "oop",
+    "difficulty": "medium",
+    "question": "How would you design a simple rate limiter for an API?",
+    "sample_good_points": [
+      "Clarifies requirements: window, per-user limits, allowance for bursts",
+      "Sliding window or token bucket explanation",
+      "Data structures: counters with timestamps, queues, or buckets",
+      "Discusses memory/time complexity and accuracy trade-offs",
+      "Considers distributed aspect or persistence briefly"
+    ]
+  }
+]
